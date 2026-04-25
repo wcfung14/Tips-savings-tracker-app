@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piggy Bank — Tip Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink-50: #fdf2f6;
+    --pink-100: #fce7f0;
+    --pink-200: #f9c5db;
+    --pink-400: #ed93b1;
+    --pink-500: #D4537E;
+    --pink-600: #b83d68;
+    --pink-700: #993556;
+    --green-50: #e8f7f0;
+    --green-600: #0F6E56;
+    --amber-400: #EF9F27;
+    --gray-50: #fafafa;
+    --gray-100: #f4f4f5;
+    --gray-200: #e4e4e7;
+    --gray-400: #a1a1aa;
+    --gray-600: #52525b;
+    --gray-800: #27272a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--pink-50);
+    color: var(--gray-800);
+    min-height: 100vh;
+  }
+
+  .app {
+    max-width: 420px;
+    margin: 0 auto;
+    padding-bottom: 3rem;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: var(--pink-700);
+    padding: 2rem 1.5rem 2.5rem;
+    text-align: center;
+    border-radius: 0 0 32px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; left: -30px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--pink-200);
+    margin-bottom: 1rem;
+  }
+  .pig-svg { margin: 0 auto 1rem; display: block; }
+  .hero-label {
+    font-size: 13px;
+    color: var(--pink-200);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .hero-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .hero-sub {
+    font-size: 13px;
+    color: var(--pink-200);
+    font-weight: 500;
+  }
+  .coin-dot {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--amber-400);
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+
+  /* ── Stats ── */
+  .stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 1.25rem 1rem 0;
+  }
+  .stat {
+    background: #fff;
+    border: 1px solid var(--pink-100);
+    border-radius: 16px;
+    padding: 1rem;
+  }
+  .stat-lbl {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gray-400);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .stat-val {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--gray-800);
+  }
+
+  /* ── Section header ── */
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1rem 0.75rem;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+  }
+  .add-btn {
+    background: var(--pink-500);
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 7px 18px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .add-btn:hover { background: var(--pink-600); }
+  .add-btn:active { transform: scale(0.97); }
+
+  /* ── Entry cards ── */
+  .entries { padding: 0 1rem; }
+
+  .entry-card {
+    background: #fff;
+    border: 1px solid var(--pink-100);
+    border-radius: 20px;
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    transition: border-color 0.15s;
+  }
+  .entry-card:hover { border-color: var(--pink-200); }
+
+  .entry-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.875rem;
+  }
+  .entry-name {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--gray-800);
+  }
+  .entry-date {
+    font-size: 12px;
+    color: var(--gray-400);
+    font-weight: 600;
+    margin-top: 2px;
+  }
+  .entry-food-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 8px;
+    background: var(--pink-100);
+    color: var(--pink-700);
+    margin-top: 5px;
+  }
+  .saved-badge {
+    background: var(--green-50);
+    color: var(--green-600);
+    font-size: 13px;
+    font-weight: 800;
+    padding: 5px 12px;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+  .entry-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    border-top: 1px solid var(--pink-100);
+    padding-top: 0.875rem;
+  }
+  .entry-field-lbl {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--gray-400);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .entry-field-val {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray-800);
+  }
+  .entry-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .del-btn {
+    background: none;
+    border: none;
+    color: var(--gray-400);
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+    padding: 0 2px;
+    font-family: sans-serif;
+    transition: color 0.15s;
+  }
+  .del-btn:hover { color: #e24b4a; }
+
+  .empty {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    color: var(--gray-400);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  /* ── Modal ── */
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 200;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .overlay.open { display: flex; }
+
+  .sheet {
+    background: #fff;
+    border-radius: 24px 24px 0 0;
+    padding: 1.75rem 1.5rem 2rem;
+    width: 100%;
+    max-width: 420px;
+    animation: slideUp 0.25s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .sheet-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--gray-800);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .pig-mini {
+    width: 28px; height: 28px;
+    background: var(--pink-100);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+
+  .field { margin-bottom: 0.875rem; }
+  .field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gray-400);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .field input, .field select {
+    width: 100%;
+    padding: 10px 13px;
+    border-radius: 12px;
+    border: 1.5px solid var(--gray-200);
+    background: var(--gray-50);
+    color: var(--gray-800);
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    transition: border-color 0.15s;
+    outline: none;
+    -webkit-appearance: none;
+  }
+  .field input:focus, .field select:focus {
+    border-color: var(--pink-400);
+    background: #fff;
+  }
+  .field-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .calc-hint {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--green-600);
+    padding: 8px 12px;
+    background: var(--green-50);
+    border-radius: 10px;
+    margin-top: -4px;
+    margin-bottom: 0.875rem;
+    display: none;
+  }
+
+  .btn-row { display: flex; gap: 10px; margin-top: 1.25rem; }
+  .btn-cancel {
+    flex: 1;
+    padding: 12px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 14px;
+    background: transparent;
+    color: var(--gray-600);
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-cancel:hover { background: var(--gray-100); }
+  .btn-save {
+    flex: 2;
+    padding: 12px;
+    border: none;
+    border-radius: 14px;
+    background: var(--pink-500);
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .btn-save:hover { background: var(--pink-600); }
+  .btn-save:active { transform: scale(0.98); }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <div class="hero">
+    <div class="hero-eyebrow">My Tip Savings</div>
+    <svg class="pig-svg" width="120" height="96" viewBox="0 0 120 96" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="58" cy="58" rx="34" ry="28" fill="#F4C0D1"/>
+      <ellipse cx="58" cy="54" rx="30" ry="26" fill="#ED93B1"/>
+      <ellipse cx="86" cy="58" rx="10" ry="8" fill="#F4C0D1"/>
+      <ellipse cx="86" cy="58" rx="7" ry="5.5" fill="#ED93B1"/>
+      <ellipse cx="72" cy="70" rx="8" ry="5.5" fill="#F4C0D1"/>
+      <ellipse cx="44" cy="70" rx="8" ry="5.5" fill="#F4C0D1"/>
+      <ellipse cx="64" cy="33" rx="9" ry="7" fill="#F4C0D1"/>
+      <ellipse cx="48" cy="33" rx="9" ry="7" fill="#F4C0D1"/>
+      <ellipse cx="64" cy="32" rx="6" ry="4.5" fill="#ED93B1"/>
+      <ellipse cx="48" cy="32" rx="6" ry="4.5" fill="#ED93B1"/>
+      <ellipse cx="62" cy="61" rx="10" ry="7" fill="#D4537E"/>
+      <ellipse cx="59" cy="61" rx="3" ry="2.5" fill="#993556"/>
+      <ellipse cx="65" cy="61" rx="3" ry="2.5" fill="#993556"/>
+      <circle cx="50" cy="51" r="3.5" fill="#993556"/>
+      <circle cx="66" cy="51" r="3.5" fill="#993556"/>
+      <ellipse cx="30" cy="54" rx="6" ry="14" fill="#F4C0D1"/>
+      <ellipse cx="30" cy="54" rx="4" ry="10" fill="#ED93B1"/>
+      <rect x="53" y="6" width="10" height="3" rx="1.5" fill="#72243E" opacity="0.8"/>
+      <rect x="56" y="3" width="4" height="18" rx="2" fill="#72243E" opacity="0.5"/>
+      <rect x="52" y="8" width="12" height="2" rx="1" fill="#EF9F27"/>
+    </svg>
+    <div class="hero-label">Total saved on tips</div>
+    <div class="hero-amount" id="heroAmt">$0.00</div>
+    <div class="hero-sub" id="heroSub"><span class="coin-dot"></span>0 restaurant visits</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-lbl">Avg saved / visit</div>
+      <div class="stat-val" id="statAvg">—</div>
+    </div>
+    <div class="stat">
+      <div class="stat-lbl">Tips actually paid</div>
+      <div class="stat-val" id="statPaid">$0.00</div>
+    </div>
+    <div class="stat">
+      <div class="stat-lbl">Total bill spend</div>
+      <div class="stat-val" id="statSpend">$0.00</div>
+    </div>
+    <div class="stat">
+      <div class="stat-lbl">Expected tips</div>
+      <div class="stat-val" id="statExpected">$0.00</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <span class="section-title">My visits</span>
+    <button class="add-btn" onclick="openModal()">+ Add visit</button>
+  </div>
+
+  <div class="entries" id="entriesList"></div>
+
+</div>
+
+<!-- Modal -->
+<div class="overlay" id="overlay">
+  <div class="sheet">
+    <div class="sheet-title">
+      <div class="pig-mini">🐷</div>
+      New visit
+    </div>
+    <div class="field">
+      <label>Date</label>
+      <input type="date" id="fDate">
+    </div>
+    <div class="field">
+      <label>Restaurant</label>
+      <input type="text" id="fRestaurant" placeholder="Where did you eat?">
+    </div>
+    <div class="field">
+      <label>Food ordered</label>
+      <input type="text" id="fFood" placeholder="What did you have?">
+    </div>
+    <div class="field-2">
+      <div class="field">
+        <label>Bill amount ($)</label>
+        <input type="number" id="fAmount" placeholder="0.00" step="0.01" oninput="updateCalc()">
+      </div>
+      <div class="field">
+        <label>Tip paid ($)</label>
+        <input type="number" id="fTipped" placeholder="0.00" step="0.01" value="0" oninput="updateCalc()">
+      </div>
+    </div>
+    <div class="field">
+      <label>Expected tip %</label>
+      <select id="fPct" onchange="updateCalc()">
+        <option value="0.12">12%</option>
+        <option value="0.15">15%</option>
+        <option value="0.18" selected>18%</option>
+        <option value="0.20">20%</option>
+        <option value="0.25">25%</option>
+      </select>
+    </div>
+    <div class="calc-hint" id="calcHint"></div>
+    <div class="btn-row">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" onclick="saveEntry()">Save visit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const KEY = 'piggybank_tips_v2';
+
+const seed = [
+  {id:1,date:'2026-01-01',restaurant:'',food:'',amount:41.06,tipped:0,pct:0.18},
+  {id:2,date:'2026-01-02',restaurant:'',food:'',amount:54.39,tipped:5,pct:0.15},
+  {id:3,date:'2026-01-05',restaurant:'',food:'',amount:5.24,tipped:0,pct:0.15},
+  {id:4,date:'2026-01-08',restaurant:'',food:'',amount:32.29,tipped:0,pct:0.15},
+  {id:5,date:'2026-01-15',restaurant:'',food:'Drinks',amount:23.81,tipped:0,pct:0.18},
+  {id:6,date:'2026-01-16',restaurant:'',food:'',amount:19.64,tipped:0,pct:0.18},
+  {id:7,date:'2026-01-16',restaurant:'',food:'',amount:46.16,tipped:0,pct:0.12},
+  {id:8,date:'2026-01-17',restaurant:'',food:'Coffee',amount:6.56,tipped:0,pct:0.18},
+  {id:9,date:'2026-01-17',restaurant:'',food:'',amount:8.82,tipped:0,pct:0.15},
+  {id:10,date:'2026-01-17',restaurant:'',food:'',amount:27.04,tipped:0,pct:0.15},
+];
+
+function load() {
+  try { const r = localStorage.getItem(KEY); if (r) return JSON.parse(r); } catch(e) {}
+  localStorage.setItem(KEY, JSON.stringify(seed));
+  return seed;
+}
+function save(entries) { localStorage.setItem(KEY, JSON.stringify(entries)); }
+function c(n) { return '$' + parseFloat(n).toFixed(2); }
+function fmtDate(d) {
+  const dt = new Date(d + 'T12:00:00');
+  return dt.toLocaleDateString('en-CA', {month:'short', day:'numeric', year:'numeric'});
+}
+
+function render() {
+  const entries = load();
+  const sorted = [...entries].sort((a,b) => b.date.localeCompare(a.date));
+  let totalSaved=0, totalPaid=0, totalSpend=0, totalExpected=0;
+  entries.forEach(e => {
+    const exp = e.amount * e.pct;
+    totalSaved += Math.max(0, exp - e.tipped);
+    totalPaid += e.tipped;
+    totalSpend += e.amount;
+    totalExpected += exp;
+  });
+  document.getElementById('heroAmt').textContent = c(totalSaved);
+  document.getElementById('heroSub').innerHTML = '<span class="coin-dot"></span>' + entries.length + ' restaurant visit' + (entries.length!==1?'s':'');
+  document.getElementById('statAvg').textContent = entries.length ? c(totalSaved/entries.length) : '—';
+  document.getElementById('statPaid').textContent = c(totalPaid);
+  document.getElementById('statSpend').textContent = c(totalSpend);
+  document.getElementById('statExpected').textContent = c(totalExpected);
+
+  const list = document.getElementById('entriesList');
+  if (!sorted.length) {
+    list.innerHTML = '<div class="empty">No visits yet — tap "+ Add visit" to start saving!</div>';
+    return;
+  }
+  list.innerHTML = sorted.map(e => {
+    const exp = e.amount * e.pct;
+    const saved = Math.max(0, exp - e.tipped);
+    const name = e.restaurant || 'Restaurant visit';
+    return `<div class="entry-card">
+      <div class="entry-top">
+        <div>
+          <div class="entry-name">${name}</div>
+          <div class="entry-date">${fmtDate(e.date)}</div>
+          ${e.food ? '<span class="entry-food-badge">'+e.food+'</span>' : ''}
+        </div>
+        <div class="entry-actions">
+          <span class="saved-badge">+${c(saved)}</span>
+          <button class="del-btn" onclick="del(${e.id})">×</button>
+        </div>
+      </div>
+      <div class="entry-grid">
+        <div>
+          <div class="entry-field-lbl">Bill</div>
+          <div class="entry-field-val">${c(e.amount)}</div>
+        </div>
+        <div>
+          <div class="entry-field-lbl">Tip paid</div>
+          <div class="entry-field-val">${c(e.tipped)}</div>
+        </div>
+        <div>
+          <div class="entry-field-lbl">Expected (${Math.round(e.pct*100)}%)</div>
+          <div class="entry-field-val">${c(exp)}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openModal() {
+  document.getElementById('fDate').value = new Date().toISOString().slice(0,10);
+  document.getElementById('fRestaurant').value = '';
+  document.getElementById('fFood').value = '';
+  document.getElementById('fAmount').value = '';
+  document.getElementById('fTipped').value = '0';
+  document.getElementById('fPct').value = '0.18';
+  document.getElementById('calcHint').style.display = 'none';
+  document.getElementById('overlay').classList.add('open');
+}
+function closeModal() { document.getElementById('overlay').classList.remove('open'); }
+
+function updateCalc() {
+  const amt = parseFloat(document.getElementById('fAmount').value) || 0;
+  const tipped = parseFloat(document.getElementById('fTipped').value) || 0;
+  const pct = parseFloat(document.getElementById('fPct').value);
+  const hint = document.getElementById('calcHint');
+  if (amt > 0) {
+    const exp = amt * pct;
+    const saved = Math.max(0, exp - tipped);
+    hint.style.display = 'block';
+    hint.textContent = 'Expected tip: ' + c(exp) + '  ·  You save: ' + c(saved);
+  } else {
+    hint.style.display = 'none';
+  }
+}
+
+function saveEntry() {
+  const date = document.getElementById('fDate').value;
+  const amount = parseFloat(document.getElementById('fAmount').value);
+  if (!date || isNaN(amount) || amount <= 0) { alert('Please enter a date and bill amount.'); return; }
+  const entries = load();
+  const newId = entries.length ? Math.max(...entries.map(e=>e.id))+1 : 1;
+  entries.push({
+    id: newId,
+    date,
+    restaurant: document.getElementById('fRestaurant').value.trim(),
+    food: document.getElementById('fFood').value.trim(),
+    amount,
+    tipped: parseFloat(document.getElementById('fTipped').value)||0,
+    pct: parseFloat(document.getElementById('fPct').value)
+  });
+  save(entries);
+  closeModal();
+  render();
+}
+
+function del(id) {
+  if (!confirm('Delete this entry?')) return;
+  save(load().filter(e => e.id !== id));
+  render();
+}
+
+document.getElementById('overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+render();
+</script>
+</body>
+</html>
