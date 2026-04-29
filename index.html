@@ -34,11 +34,7 @@
     min-height: 100vh;
   }
 
-  .app {
-    max-width: 420px;
-    margin: 0 auto;
-    padding-bottom: 3rem;
-  }
+  .app { max-width: 420px; margin: 0 auto; padding-bottom: 3rem; }
 
   /* ── Hero ── */
   .hero {
@@ -103,12 +99,34 @@
     vertical-align: middle;
   }
 
+  /* ── Sync status ── */
+  .sync-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0.6rem 1rem;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gray-400);
+  }
+  .sync-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--gray-200);
+    transition: background 0.3s;
+  }
+  .sync-dot.syncing { background: var(--amber-400); animation: pulse 1s infinite; }
+  .sync-dot.synced  { background: #4ade80; }
+  .sync-dot.error   { background: #f87171; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
   /* ── Stats ── */
   .stats {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
-    padding: 1.25rem 1rem 0;
+    padding: 0.75rem 1rem 0;
   }
   .stat {
     background: #fff;
@@ -124,11 +142,7 @@
     text-transform: uppercase;
     margin-bottom: 4px;
   }
-  .stat-val {
-    font-size: 18px;
-    font-weight: 800;
-    color: var(--gray-800);
-  }
+  .stat-val { font-size: 18px; font-weight: 800; color: var(--gray-800); }
 
   /* ── Section header ── */
   .section-head {
@@ -158,10 +172,10 @@
   }
   .add-btn:hover { background: var(--pink-600); }
   .add-btn:active { transform: scale(0.97); }
+  .add-btn:disabled { background: var(--gray-200); color: var(--gray-400); cursor: not-allowed; }
 
   /* ── Entry cards ── */
   .entries { padding: 0 1rem; }
-
   .entry-card {
     background: #fff;
     border: 1px solid var(--pink-100);
@@ -171,24 +185,14 @@
     transition: border-color 0.15s;
   }
   .entry-card:hover { border-color: var(--pink-200); }
-
   .entry-top {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 0.875rem;
   }
-  .entry-name {
-    font-size: 15px;
-    font-weight: 800;
-    color: var(--gray-800);
-  }
-  .entry-date {
-    font-size: 12px;
-    color: var(--gray-400);
-    font-weight: 600;
-    margin-top: 2px;
-  }
+  .entry-name { font-size: 15px; font-weight: 800; color: var(--gray-800); }
+  .entry-date { font-size: 12px; color: var(--gray-400); font-weight: 600; margin-top: 2px; }
   .entry-food-badge {
     display: inline-block;
     font-size: 11px;
@@ -223,16 +227,8 @@
     text-transform: uppercase;
     margin-bottom: 2px;
   }
-  .entry-field-val {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--gray-800);
-  }
-  .entry-actions {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
+  .entry-field-val { font-size: 13px; font-weight: 700; color: var(--gray-800); }
+  .entry-actions { display: flex; align-items: center; gap: 6px; }
   .del-btn {
     background: none;
     border: none;
@@ -245,6 +241,17 @@
     transition: color 0.15s;
   }
   .del-btn:hover { color: #e24b4a; }
+  .edit-btn {
+    background: none;
+    border: none;
+    color: var(--gray-400);
+    cursor: pointer;
+    font-size: 15px;
+    line-height: 1;
+    padding: 0 2px;
+    transition: color 0.15s;
+  }
+  .edit-btn:hover { color: var(--pink-500); }
 
   .empty {
     text-align: center;
@@ -253,6 +260,17 @@
     font-size: 14px;
     font-weight: 600;
   }
+
+  /* ── Loading skeleton ── */
+  .skeleton {
+    background: linear-gradient(90deg, var(--pink-100) 25%, var(--pink-50) 50%, var(--pink-100) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+    border-radius: 20px;
+    height: 110px;
+    margin-bottom: 0.75rem;
+  }
+  @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
 
   /* ── Modal ── */
   .overlay {
@@ -265,7 +283,6 @@
     justify-content: center;
   }
   .overlay.open { display: flex; }
-
   .sheet {
     background: #fff;
     border-radius: 24px 24px 0 0;
@@ -273,12 +290,13 @@
     width: 100%;
     max-width: 420px;
     animation: slideUp 0.25s ease;
+    max-height: 92vh;
+    overflow-y: auto;
   }
   @keyframes slideUp {
     from { transform: translateY(40px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    to   { transform: translateY(0);    opacity: 1; }
   }
-
   .sheet-title {
     font-size: 18px;
     font-weight: 800;
@@ -295,7 +313,6 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 16px;
   }
-
   .field { margin-bottom: 0.875rem; }
   .field label {
     display: block;
@@ -325,7 +342,6 @@
     background: #fff;
   }
   .field-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-
   .calc-hint {
     font-size: 12px;
     font-weight: 700;
@@ -337,7 +353,6 @@
     margin-bottom: 0.875rem;
     display: none;
   }
-
   .btn-row { display: flex; gap: 10px; margin-top: 1.25rem; }
   .btn-cancel {
     flex: 1;
@@ -350,7 +365,6 @@
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
-    transition: background 0.15s;
   }
   .btn-cancel:hover { background: var(--gray-100); }
   .btn-save {
@@ -368,6 +382,7 @@
   }
   .btn-save:hover { background: var(--pink-600); }
   .btn-save:active { transform: scale(0.98); }
+  .btn-save:disabled { background: var(--gray-200); color: var(--gray-400); cursor: not-allowed; }
 </style>
 </head>
 <body>
@@ -403,41 +418,39 @@
     <div class="hero-sub" id="heroSub"><span class="coin-dot"></span>0 restaurant visits</div>
   </div>
 
+  <div class="sync-bar">
+    <div class="sync-dot" id="syncDot"></div>
+    <span id="syncLabel">Loading…</span>
+  </div>
+
   <div class="stats">
-    <div class="stat">
-      <div class="stat-lbl">Avg saved / visit</div>
-      <div class="stat-val" id="statAvg">—</div>
-    </div>
-    <div class="stat">
-      <div class="stat-lbl">Tips actually paid</div>
-      <div class="stat-val" id="statPaid">$0.00</div>
-    </div>
-    <div class="stat">
-      <div class="stat-lbl">Total bill spend</div>
-      <div class="stat-val" id="statSpend">$0.00</div>
-    </div>
-    <div class="stat">
-      <div class="stat-lbl">Expected tips</div>
-      <div class="stat-val" id="statExpected">$0.00</div>
-    </div>
+    <div class="stat"><div class="stat-lbl">Avg saved / visit</div><div class="stat-val" id="statAvg">—</div></div>
+    <div class="stat"><div class="stat-lbl">Tips actually paid</div><div class="stat-val" id="statPaid">$0.00</div></div>
+    <div class="stat"><div class="stat-lbl">Total bill spend</div><div class="stat-val" id="statSpend">$0.00</div></div>
+    <div class="stat"><div class="stat-lbl">Expected tips</div><div class="stat-val" id="statExpected">$0.00</div></div>
   </div>
 
   <div class="section-head">
     <span class="section-title">My visits</span>
-    <button class="add-btn" onclick="openModal()">+ Add visit</button>
+    <button class="add-btn" id="addBtn" onclick="openModal()" disabled>+ Add visit</button>
   </div>
 
-  <div class="entries" id="entriesList"></div>
+  <div class="entries" id="entriesList">
+    <div class="skeleton"></div>
+    <div class="skeleton"></div>
+    <div class="skeleton"></div>
+  </div>
 
 </div>
 
-<!-- Modal -->
+<!-- Add / Edit Modal -->
 <div class="overlay" id="overlay">
   <div class="sheet">
     <div class="sheet-title">
       <div class="pig-mini">🐷</div>
-      New visit
+      <span id="modalTitle">New visit</span>
     </div>
+    <input type="hidden" id="fEditId">
     <div class="field">
       <label>Date</label>
       <input type="date" id="fDate">
@@ -473,76 +486,125 @@
     <div class="calc-hint" id="calcHint"></div>
     <div class="btn-row">
       <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-      <button class="btn-save" onclick="saveEntry()">Save visit</button>
+      <button class="btn-save" id="saveBtn" onclick="saveEntry()">Save visit</button>
     </div>
   </div>
 </div>
 
 <script>
-const KEY = 'piggybank_tips_v2';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby-wgdcGe9-fwYBHSwBdLpfeMaxZ_dwcUGEp3-3gOUCOoeEV_BR9Z0RFXztQz08LCKLZQ/exec';
 
-const seed = [
-  {id:1,date:'2026-01-01',restaurant:'',food:'',amount:41.06,tipped:0,pct:0.18},
-  {id:2,date:'2026-01-02',restaurant:'',food:'',amount:54.39,tipped:5,pct:0.15},
-  {id:3,date:'2026-01-05',restaurant:'',food:'',amount:5.24,tipped:0,pct:0.15},
-  {id:4,date:'2026-01-08',restaurant:'',food:'',amount:32.29,tipped:0,pct:0.15},
-  {id:5,date:'2026-01-15',restaurant:'',food:'Drinks',amount:23.81,tipped:0,pct:0.18},
-  {id:6,date:'2026-01-16',restaurant:'',food:'',amount:19.64,tipped:0,pct:0.18},
-  {id:7,date:'2026-01-16',restaurant:'',food:'',amount:46.16,tipped:0,pct:0.12},
-  {id:8,date:'2026-01-17',restaurant:'',food:'Coffee',amount:6.56,tipped:0,pct:0.18},
-  {id:9,date:'2026-01-17',restaurant:'',food:'',amount:8.82,tipped:0,pct:0.15},
-  {id:10,date:'2026-01-17',restaurant:'',food:'',amount:27.04,tipped:0,pct:0.15},
-];
+let entries = [];
+let isSaving = false;
 
-function load() {
-  try { const r = localStorage.getItem(KEY); if (r) return JSON.parse(r); } catch(e) {}
-  localStorage.setItem(KEY, JSON.stringify(seed));
-  return seed;
+// ── Sync UI helpers ──
+function setSyncState(state, label) {
+  const dot = document.getElementById('syncDot');
+  const lbl = document.getElementById('syncLabel');
+  dot.className = 'sync-dot ' + state;
+  lbl.textContent = label;
 }
-function save(entries) { localStorage.setItem(KEY, JSON.stringify(entries)); }
-function c(n) { return '$' + parseFloat(n).toFixed(2); }
+
+// ── Format helpers ──
+function c(n) { return '$' + parseFloat(n || 0).toFixed(2); }
 function fmtDate(d) {
   const dt = new Date(d + 'T12:00:00');
-  return dt.toLocaleDateString('en-CA', {month:'short', day:'numeric', year:'numeric'});
+  return dt.toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
+// ── Load from Google Sheets ──
+async function loadFromSheets() {
+  setSyncState('syncing', 'Loading from Google Sheets…');
+  try {
+    const res = await fetch(SCRIPT_URL);
+    const json = await res.json();
+    if (json.success) {
+      entries = json.data.map(row => ({
+        id:         Number(row.id),
+        date:       String(row.date || '').slice(0, 10),
+        restaurant: row.restaurant || '',
+        food:       row.food || '',
+        amount:     parseFloat(row.amount) || 0,
+        tipped:     parseFloat(row.tipped) || 0,
+        pct:        parseFloat(row.pct) || 0.18,
+      })).filter(e => e.id && e.date);
+      setSyncState('synced', 'Synced with Google Sheets');
+      document.getElementById('addBtn').disabled = false;
+      render();
+    } else {
+      throw new Error('Bad response');
+    }
+  } catch(err) {
+    setSyncState('error', 'Could not connect — check Apps Script');
+    document.getElementById('entriesList').innerHTML =
+      '<div class="empty">⚠️ Could not load data. Check your Apps Script URL and permissions.</div>';
+  }
+}
+
+// ── Save all entries to Google Sheets ──
+async function saveToSheets() {
+  setSyncState('syncing', 'Saving…');
+  isSaving = true;
+  document.getElementById('saveBtn').disabled = true;
+  try {
+    const res = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'save', entries })
+    });
+    const json = await res.json();
+    if (json.success) {
+      setSyncState('synced', 'Saved to Google Sheets ✓');
+    } else {
+      throw new Error('Save failed');
+    }
+  } catch(err) {
+    setSyncState('error', 'Save failed — try again');
+  } finally {
+    isSaving = false;
+    document.getElementById('saveBtn').disabled = false;
+  }
+}
+
+// ── Render ──
 function render() {
-  const entries = load();
-  const sorted = [...entries].sort((a,b) => b.date.localeCompare(a.date));
-  let totalSaved=0, totalPaid=0, totalSpend=0, totalExpected=0;
+  const sorted = [...entries].sort((a, b) => b.date.localeCompare(a.date));
+  let totalSaved = 0, totalPaid = 0, totalSpend = 0, totalExpected = 0;
   entries.forEach(e => {
     const exp = e.amount * e.pct;
-    totalSaved += Math.max(0, exp - e.tipped);
-    totalPaid += e.tipped;
-    totalSpend += e.amount;
+    totalSaved    += Math.max(0, exp - e.tipped);
+    totalPaid     += e.tipped;
+    totalSpend    += e.amount;
     totalExpected += exp;
   });
+
   document.getElementById('heroAmt').textContent = c(totalSaved);
-  document.getElementById('heroSub').innerHTML = '<span class="coin-dot"></span>' + entries.length + ' restaurant visit' + (entries.length!==1?'s':'');
-  document.getElementById('statAvg').textContent = entries.length ? c(totalSaved/entries.length) : '—';
-  document.getElementById('statPaid').textContent = c(totalPaid);
-  document.getElementById('statSpend').textContent = c(totalSpend);
+  document.getElementById('heroSub').innerHTML =
+    '<span class="coin-dot"></span>' + entries.length + ' restaurant visit' + (entries.length !== 1 ? 's' : '');
+  document.getElementById('statAvg').textContent      = entries.length ? c(totalSaved / entries.length) : '—';
+  document.getElementById('statPaid').textContent     = c(totalPaid);
+  document.getElementById('statSpend').textContent    = c(totalSpend);
   document.getElementById('statExpected').textContent = c(totalExpected);
 
   const list = document.getElementById('entriesList');
   if (!sorted.length) {
-    list.innerHTML = '<div class="empty">No visits yet — tap "+ Add visit" to start saving!</div>';
+    list.innerHTML = '<div class="empty">No visits yet — tap "+ Add visit" to start saving! 🐷</div>';
     return;
   }
   list.innerHTML = sorted.map(e => {
-    const exp = e.amount * e.pct;
+    const exp   = e.amount * e.pct;
     const saved = Math.max(0, exp - e.tipped);
-    const name = e.restaurant || 'Restaurant visit';
+    const name  = e.restaurant || 'Restaurant visit';
     return `<div class="entry-card">
       <div class="entry-top">
         <div>
           <div class="entry-name">${name}</div>
           <div class="entry-date">${fmtDate(e.date)}</div>
-          ${e.food ? '<span class="entry-food-badge">'+e.food+'</span>' : ''}
+          ${e.food ? '<span class="entry-food-badge">' + e.food + '</span>' : ''}
         </div>
         <div class="entry-actions">
           <span class="saved-badge">+${c(saved)}</span>
-          <button class="del-btn" onclick="del(${e.id})">×</button>
+          <button class="edit-btn" title="Edit" onclick="openEdit(${e.id})">✏️</button>
+          <button class="del-btn"  title="Delete" onclick="del(${e.id})">×</button>
         </div>
       </div>
       <div class="entry-grid">
@@ -555,7 +617,7 @@ function render() {
           <div class="entry-field-val">${c(e.tipped)}</div>
         </div>
         <div>
-          <div class="entry-field-lbl">Expected (${Math.round(e.pct*100)}%)</div>
+          <div class="entry-field-lbl">Expected (${Math.round(e.pct * 100)}%)</div>
           <div class="entry-field-val">${c(exp)}</div>
         </div>
       </div>
@@ -563,64 +625,83 @@ function render() {
   }).join('');
 }
 
-function openModal() {
-  document.getElementById('fDate').value = new Date().toISOString().slice(0,10);
-  document.getElementById('fRestaurant').value = '';
-  document.getElementById('fFood').value = '';
-  document.getElementById('fAmount').value = '';
-  document.getElementById('fTipped').value = '0';
-  document.getElementById('fPct').value = '0.18';
+// ── Modal ──
+function openModal(editEntry) {
+  document.getElementById('fEditId').value      = editEntry ? editEntry.id : '';
+  document.getElementById('modalTitle').textContent = editEntry ? 'Edit visit' : 'New visit';
+  document.getElementById('fDate').value        = editEntry ? editEntry.date : new Date().toISOString().slice(0, 10);
+  document.getElementById('fRestaurant').value  = editEntry ? editEntry.restaurant : '';
+  document.getElementById('fFood').value        = editEntry ? editEntry.food : '';
+  document.getElementById('fAmount').value      = editEntry ? editEntry.amount : '';
+  document.getElementById('fTipped').value      = editEntry ? editEntry.tipped : '0';
+  document.getElementById('fPct').value         = editEntry ? editEntry.pct : '0.18';
   document.getElementById('calcHint').style.display = 'none';
+  if (editEntry) updateCalc();
   document.getElementById('overlay').classList.add('open');
 }
+
+function openEdit(id) {
+  const entry = entries.find(e => e.id === id);
+  if (entry) openModal(entry);
+}
+
 function closeModal() { document.getElementById('overlay').classList.remove('open'); }
 
 function updateCalc() {
-  const amt = parseFloat(document.getElementById('fAmount').value) || 0;
+  const amt    = parseFloat(document.getElementById('fAmount').value) || 0;
   const tipped = parseFloat(document.getElementById('fTipped').value) || 0;
-  const pct = parseFloat(document.getElementById('fPct').value);
-  const hint = document.getElementById('calcHint');
+  const pct    = parseFloat(document.getElementById('fPct').value);
+  const hint   = document.getElementById('calcHint');
   if (amt > 0) {
-    const exp = amt * pct;
+    const exp   = amt * pct;
     const saved = Math.max(0, exp - tipped);
     hint.style.display = 'block';
-    hint.textContent = 'Expected tip: ' + c(exp) + '  ·  You save: ' + c(saved);
+    hint.textContent   = 'Expected tip: ' + c(exp) + '  ·  You save: ' + c(saved);
   } else {
     hint.style.display = 'none';
   }
 }
 
-function saveEntry() {
-  const date = document.getElementById('fDate').value;
+async function saveEntry() {
+  const date   = document.getElementById('fDate').value;
   const amount = parseFloat(document.getElementById('fAmount').value);
   if (!date || isNaN(amount) || amount <= 0) { alert('Please enter a date and bill amount.'); return; }
-  const entries = load();
-  const newId = entries.length ? Math.max(...entries.map(e=>e.id))+1 : 1;
-  entries.push({
-    id: newId,
+
+  const editId = document.getElementById('fEditId').value;
+  const updated = {
+    id:         editId ? Number(editId) : (entries.length ? Math.max(...entries.map(e => e.id)) + 1 : 1),
     date,
     restaurant: document.getElementById('fRestaurant').value.trim(),
-    food: document.getElementById('fFood').value.trim(),
+    food:       document.getElementById('fFood').value.trim(),
     amount,
-    tipped: parseFloat(document.getElementById('fTipped').value)||0,
-    pct: parseFloat(document.getElementById('fPct').value)
-  });
-  save(entries);
-  closeModal();
+    tipped:     parseFloat(document.getElementById('fTipped').value) || 0,
+    pct:        parseFloat(document.getElementById('fPct').value),
+  };
+
+  if (editId) {
+    entries = entries.map(e => e.id === Number(editId) ? updated : e);
+  } else {
+    entries.push(updated);
+  }
+
   render();
+  closeModal();
+  await saveToSheets();
 }
 
-function del(id) {
+async function del(id) {
   if (!confirm('Delete this entry?')) return;
-  save(load().filter(e => e.id !== id));
+  entries = entries.filter(e => e.id !== id);
   render();
+  await saveToSheets();
 }
 
 document.getElementById('overlay').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
 
-render();
+// ── Boot ──
+loadFromSheets();
 </script>
 </body>
 </html>
