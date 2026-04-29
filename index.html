@@ -7,389 +7,143 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --pink-50: #fdf2f6;
-    --pink-100: #fce7f0;
-    --pink-200: #f9c5db;
-    --pink-400: #ed93b1;
-    --pink-500: #D4537E;
-    --pink-600: #b83d68;
-    --pink-700: #993556;
-    --green-50: #e8f7f0;
-    --green-600: #0F6E56;
+    --pink-50: #fdf2f6; --pink-100: #fce7f0; --pink-200: #f9c5db;
+    --pink-400: #ed93b1; --pink-500: #D4537E; --pink-600: #b83d68; --pink-700: #993556;
+    --green-50: #e8f7f0; --green-600: #0F6E56;
     --amber-400: #EF9F27;
-    --gray-50: #fafafa;
-    --gray-100: #f4f4f5;
-    --gray-200: #e4e4e7;
-    --gray-400: #a1a1aa;
-    --gray-600: #52525b;
-    --gray-800: #27272a;
+    --gray-50: #fafafa; --gray-100: #f4f4f5; --gray-200: #e4e4e7;
+    --gray-400: #a1a1aa; --gray-600: #52525b; --gray-800: #27272a;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Nunito', sans-serif;
-    background: var(--pink-50);
-    color: var(--gray-800);
-    min-height: 100vh;
-  }
-
+  body { font-family: 'Nunito', sans-serif; background: var(--pink-50); color: var(--gray-800); min-height: 100vh; }
   .app { max-width: 420px; margin: 0 auto; padding-bottom: 3rem; }
 
-  /* ── Hero ── */
-  .hero {
-    background: var(--pink-700);
-    padding: 2rem 1.5rem 2.5rem;
-    text-align: center;
-    border-radius: 0 0 32px 32px;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -40px; right: -40px;
-    width: 160px; height: 160px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.05);
-  }
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: -20px; left: -30px;
-    width: 120px; height: 120px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.04);
-  }
-  .hero-eyebrow {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--pink-200);
-    margin-bottom: 1rem;
-  }
-  .pig-svg { margin: 0 auto 1rem; display: block; }
-  .hero-label {
-    font-size: 13px;
-    color: var(--pink-200);
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-  .hero-amount {
-    font-family: 'Playfair Display', serif;
-    font-size: 52px;
-    color: #fff;
-    line-height: 1;
-    margin-bottom: 6px;
-  }
-  .hero-sub {
-    font-size: 13px;
-    color: var(--pink-200);
-    font-weight: 500;
-  }
-  .coin-dot {
-    display: inline-block;
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: var(--amber-400);
-    margin-right: 5px;
-    vertical-align: middle;
-  }
+  /* Hero */
+  .hero { background: var(--pink-700); padding: 2rem 1.5rem 2.5rem; text-align: center; border-radius: 0 0 32px 32px; position: relative; overflow: hidden; }
+  .hero::before { content:''; position:absolute; top:-40px; right:-40px; width:160px; height:160px; border-radius:50%; background:rgba(255,255,255,0.05); }
+  .hero::after  { content:''; position:absolute; bottom:-20px; left:-30px; width:120px; height:120px; border-radius:50%; background:rgba(255,255,255,0.04); }
+  .hero-top-row { display:flex; justify-content:flex-end; margin-bottom:0.5rem; position:relative; z-index:2; }
+  .settings-btn { background:rgba(255,255,255,0.15); border:none; border-radius:50%; width:34px; height:34px; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; transition:background 0.15s; }
+  .settings-btn:hover { background:rgba(255,255,255,0.25); }
+  .hero-eyebrow { font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--pink-200); margin-bottom:0.75rem; }
+  .pig-svg { margin:0 auto 1rem; display:block; }
+  .hero-label { font-size:13px; color:var(--pink-200); font-weight:600; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:4px; }
+  .hero-amount { font-family:'Playfair Display',serif; font-size:52px; color:#fff; line-height:1; margin-bottom:6px; }
+  .hero-sub { font-size:13px; color:var(--pink-200); font-weight:500; }
+  .coin-dot { display:inline-block; width:10px; height:10px; border-radius:50%; background:var(--amber-400); margin-right:5px; vertical-align:middle; }
 
-  /* ── Sync status ── */
-  .sync-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 0.6rem 1rem;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--gray-400);
-  }
-  .sync-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--gray-200);
-    transition: background 0.3s;
-  }
-  .sync-dot.syncing { background: var(--amber-400); animation: pulse 1s infinite; }
-  .sync-dot.synced  { background: #4ade80; }
-  .sync-dot.error   { background: #f87171; }
+  /* Sync bar */
+  .sync-bar { display:flex; align-items:center; justify-content:center; gap:6px; padding:0.6rem 1rem; font-size:12px; font-weight:700; color:var(--gray-400); }
+  .sync-dot { width:8px; height:8px; border-radius:50%; background:var(--gray-200); transition:background 0.3s; }
+  .sync-dot.syncing { background:var(--amber-400); animation:pulse 1s infinite; }
+  .sync-dot.synced  { background:#4ade80; }
+  .sync-dot.error   { background:#f87171; }
+  .sync-dot.offline { background:var(--gray-400); }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
-  /* ── Stats ── */
-  .stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    padding: 0.75rem 1rem 0;
-  }
-  .stat {
-    background: #fff;
-    border: 1px solid var(--pink-100);
-    border-radius: 16px;
-    padding: 1rem;
-  }
-  .stat-lbl {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--gray-400);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-  .stat-val { font-size: 18px; font-weight: 800; color: var(--gray-800); }
+  /* Stats */
+  .stats { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0.75rem 1rem 0; }
+  .stat { background:#fff; border:1px solid var(--pink-100); border-radius:16px; padding:1rem; }
+  .stat-lbl { font-size:11px; font-weight:700; color:var(--gray-400); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:4px; }
+  .stat-val { font-size:18px; font-weight:800; color:var(--gray-800); }
 
-  /* ── Section header ── */
-  .section-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 1rem 0.75rem;
-  }
-  .section-title {
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gray-400);
-  }
-  .add-btn {
-    background: var(--pink-500);
-    color: #fff;
-    border: none;
-    border-radius: 20px;
-    padding: 7px 18px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background 0.15s, transform 0.1s;
-  }
-  .add-btn:hover { background: var(--pink-600); }
-  .add-btn:active { transform: scale(0.97); }
-  .add-btn:disabled { background: var(--gray-200); color: var(--gray-400); cursor: not-allowed; }
+  /* Section */
+  .section-head { display:flex; justify-content:space-between; align-items:center; padding:1.5rem 1rem 0.75rem; }
+  .section-title { font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:var(--gray-400); }
+  .add-btn { background:var(--pink-500); color:#fff; border:none; border-radius:20px; padding:7px 18px; font-family:'Nunito',sans-serif; font-size:13px; font-weight:700; cursor:pointer; transition:background 0.15s,transform 0.1s; }
+  .add-btn:hover { background:var(--pink-600); }
+  .add-btn:active { transform:scale(0.97); }
+  .add-btn:disabled { background:var(--gray-200); color:var(--gray-400); cursor:not-allowed; }
 
-  /* ── Entry cards ── */
-  .entries { padding: 0 1rem; }
-  .entry-card {
-    background: #fff;
-    border: 1px solid var(--pink-100);
-    border-radius: 20px;
-    padding: 1.1rem 1.25rem;
-    margin-bottom: 0.75rem;
-    transition: border-color 0.15s;
-  }
-  .entry-card:hover { border-color: var(--pink-200); }
-  .entry-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 0.875rem;
-  }
-  .entry-name { font-size: 15px; font-weight: 800; color: var(--gray-800); }
-  .entry-date { font-size: 12px; color: var(--gray-400); font-weight: 600; margin-top: 2px; }
-  .entry-food-badge {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 3px 9px;
-    border-radius: 8px;
-    background: var(--pink-100);
-    color: var(--pink-700);
-    margin-top: 5px;
-  }
-  .saved-badge {
-    background: var(--green-50);
-    color: var(--green-600);
-    font-size: 13px;
-    font-weight: 800;
-    padding: 5px 12px;
-    border-radius: 10px;
-    white-space: nowrap;
-  }
-  .entry-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-    border-top: 1px solid var(--pink-100);
-    padding-top: 0.875rem;
-  }
-  .entry-field-lbl {
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--gray-400);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 2px;
-  }
-  .entry-field-val { font-size: 13px; font-weight: 700; color: var(--gray-800); }
-  .entry-actions { display: flex; align-items: center; gap: 6px; }
-  .del-btn {
-    background: none;
-    border: none;
-    color: var(--gray-400);
-    cursor: pointer;
-    font-size: 20px;
-    line-height: 1;
-    padding: 0 2px;
-    font-family: sans-serif;
-    transition: color 0.15s;
-  }
-  .del-btn:hover { color: #e24b4a; }
-  .edit-btn {
-    background: none;
-    border: none;
-    color: var(--gray-400);
-    cursor: pointer;
-    font-size: 15px;
-    line-height: 1;
-    padding: 0 2px;
-    transition: color 0.15s;
-  }
-  .edit-btn:hover { color: var(--pink-500); }
-
-  .empty {
-    text-align: center;
-    padding: 2.5rem 1rem;
-    color: var(--gray-400);
-    font-size: 14px;
-    font-weight: 600;
-  }
-
-  /* ── Loading skeleton ── */
-  .skeleton {
-    background: linear-gradient(90deg, var(--pink-100) 25%, var(--pink-50) 50%, var(--pink-100) 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.4s infinite;
-    border-radius: 20px;
-    height: 110px;
-    margin-bottom: 0.75rem;
-  }
+  /* Entries */
+  .entries { padding:0 1rem; }
+  .entry-card { background:#fff; border:1px solid var(--pink-100); border-radius:20px; padding:1.1rem 1.25rem; margin-bottom:0.75rem; transition:border-color 0.15s; }
+  .entry-card:hover { border-color:var(--pink-200); }
+  .entry-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.875rem; }
+  .entry-name { font-size:15px; font-weight:800; color:var(--gray-800); }
+  .entry-date { font-size:12px; color:var(--gray-400); font-weight:600; margin-top:2px; }
+  .entry-food-badge { display:inline-block; font-size:11px; font-weight:700; padding:3px 9px; border-radius:8px; background:var(--pink-100); color:var(--pink-700); margin-top:5px; }
+  .saved-badge { background:var(--green-50); color:var(--green-600); font-size:13px; font-weight:800; padding:5px 12px; border-radius:10px; white-space:nowrap; }
+  .entry-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; border-top:1px solid var(--pink-100); padding-top:0.875rem; }
+  .entry-field-lbl { font-size:10px; font-weight:700; color:var(--gray-400); letter-spacing:0.05em; text-transform:uppercase; margin-bottom:2px; }
+  .entry-field-val { font-size:13px; font-weight:700; color:var(--gray-800); }
+  .entry-actions { display:flex; align-items:center; gap:6px; }
+  .del-btn { background:none; border:none; color:var(--gray-400); cursor:pointer; font-size:20px; line-height:1; padding:0 2px; font-family:sans-serif; transition:color 0.15s; }
+  .del-btn:hover { color:#e24b4a; }
+  .edit-btn { background:none; border:none; color:var(--gray-400); cursor:pointer; font-size:15px; line-height:1; padding:0 2px; transition:color 0.15s; }
+  .edit-btn:hover { color:var(--pink-500); }
+  .empty { text-align:center; padding:2.5rem 1rem; color:var(--gray-400); font-size:14px; font-weight:600; line-height:1.6; }
+  .skeleton { background:linear-gradient(90deg,var(--pink-100) 25%,var(--pink-50) 50%,var(--pink-100) 75%); background-size:200% 100%; animation:shimmer 1.4s infinite; border-radius:20px; height:110px; margin-bottom:0.75rem; }
   @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
 
-  /* ── Modal ── */
-  .overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.45);
-    z-index: 200;
-    align-items: flex-end;
-    justify-content: center;
-  }
-  .overlay.open { display: flex; }
-  .sheet {
-    background: #fff;
-    border-radius: 24px 24px 0 0;
-    padding: 1.75rem 1.5rem 2rem;
-    width: 100%;
-    max-width: 420px;
-    animation: slideUp 0.25s ease;
-    max-height: 92vh;
-    overflow-y: auto;
-  }
-  @keyframes slideUp {
-    from { transform: translateY(40px); opacity: 0; }
-    to   { transform: translateY(0);    opacity: 1; }
-  }
-  .sheet-title {
-    font-size: 18px;
-    font-weight: 800;
-    color: var(--gray-800);
-    margin-bottom: 1.25rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .pig-mini {
-    width: 28px; height: 28px;
-    background: var(--pink-100);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
-  }
-  .field { margin-bottom: 0.875rem; }
-  .field label {
-    display: block;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--gray-400);
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    margin-bottom: 5px;
-  }
-  .field input, .field select {
-    width: 100%;
-    padding: 10px 13px;
-    border-radius: 12px;
-    border: 1.5px solid var(--gray-200);
-    background: var(--gray-50);
-    color: var(--gray-800);
-    font-family: 'Nunito', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    transition: border-color 0.15s;
-    outline: none;
-    -webkit-appearance: none;
-  }
-  .field input:focus, .field select:focus {
-    border-color: var(--pink-400);
-    background: #fff;
-  }
-  .field-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .calc-hint {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--green-600);
-    padding: 8px 12px;
-    background: var(--green-50);
-    border-radius: 10px;
-    margin-top: -4px;
-    margin-bottom: 0.875rem;
-    display: none;
-  }
-  .btn-row { display: flex; gap: 10px; margin-top: 1.25rem; }
-  .btn-cancel {
-    flex: 1;
-    padding: 12px;
-    border: 1.5px solid var(--gray-200);
-    border-radius: 14px;
-    background: transparent;
-    color: var(--gray-600);
-    font-family: 'Nunito', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-  }
-  .btn-cancel:hover { background: var(--gray-100); }
-  .btn-save {
-    flex: 2;
-    padding: 12px;
-    border: none;
-    border-radius: 14px;
-    background: var(--pink-500);
-    color: #fff;
-    font-family: 'Nunito', sans-serif;
-    font-size: 14px;
-    font-weight: 800;
-    cursor: pointer;
-    transition: background 0.15s, transform 0.1s;
-  }
-  .btn-save:hover { background: var(--pink-600); }
-  .btn-save:active { transform: scale(0.98); }
-  .btn-save:disabled { background: var(--gray-200); color: var(--gray-400); cursor: not-allowed; }
+  /* Overlays */
+  .overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:200; align-items:flex-end; justify-content:center; }
+  .overlay.open { display:flex; }
+  .sheet { background:#fff; border-radius:24px 24px 0 0; padding:1.75rem 1.5rem 2rem; width:100%; max-width:420px; animation:slideUp 0.25s ease; max-height:92vh; overflow-y:auto; }
+  @keyframes slideUp { from{transform:translateY(40px);opacity:0} to{transform:translateY(0);opacity:1} }
+  .sheet-title { font-size:18px; font-weight:800; color:var(--gray-800); margin-bottom:1.25rem; display:flex; align-items:center; gap:8px; }
+  .pig-mini { width:28px; height:28px; background:var(--pink-100); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; }
+
+  /* Fields */
+  .field { margin-bottom:0.875rem; }
+  .field label { display:block; font-size:11px; font-weight:700; color:var(--gray-400); letter-spacing:0.07em; text-transform:uppercase; margin-bottom:5px; }
+  .field input, .field select { width:100%; padding:10px 13px; border-radius:12px; border:1.5px solid var(--gray-200); background:var(--gray-50); color:var(--gray-800); font-family:'Nunito',sans-serif; font-size:14px; font-weight:600; transition:border-color 0.15s; outline:none; -webkit-appearance:none; }
+  .field input:focus, .field select:focus { border-color:var(--pink-400); background:#fff; }
+  .field-2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .calc-hint { font-size:12px; font-weight:700; color:var(--green-600); padding:8px 12px; background:var(--green-50); border-radius:10px; margin-top:-4px; margin-bottom:0.875rem; display:none; }
+  .btn-row { display:flex; gap:10px; margin-top:1.25rem; }
+  .btn-cancel { flex:1; padding:12px; border:1.5px solid var(--gray-200); border-radius:14px; background:transparent; color:var(--gray-600); font-family:'Nunito',sans-serif; font-size:14px; font-weight:700; cursor:pointer; }
+  .btn-cancel:hover { background:var(--gray-100); }
+  .btn-save { flex:2; padding:12px; border:none; border-radius:14px; background:var(--pink-500); color:#fff; font-family:'Nunito',sans-serif; font-size:14px; font-weight:800; cursor:pointer; transition:background 0.15s,transform 0.1s; }
+  .btn-save:hover { background:var(--pink-600); }
+  .btn-save:active { transform:scale(0.98); }
+  .btn-save:disabled { background:var(--gray-200); color:var(--gray-400); cursor:not-allowed; }
+
+  /* Setup / Settings full screen */
+  .setup-screen { display:none; position:fixed; inset:0; background:var(--pink-50); z-index:300; overflow-y:auto; }
+  .setup-screen.open { display:block; }
+  .setup-inner { max-width:420px; margin:0 auto; padding:2rem 1.5rem 3rem; }
+  .setup-back { display:none; align-items:center; gap:6px; background:none; border:none; color:var(--pink-500); font-family:'Nunito',sans-serif; font-size:14px; font-weight:700; cursor:pointer; margin-bottom:1.5rem; padding:0; }
+  .setup-pig { text-align:center; margin-bottom:1.25rem; }
+  .setup-title { font-family:'Playfair Display',serif; font-size:26px; color:var(--pink-700); margin-bottom:0.5rem; text-align:center; }
+  .setup-sub { font-size:13px; color:var(--gray-400); font-weight:600; text-align:center; margin-bottom:1.75rem; line-height:1.5; }
+  .setup-card { background:#fff; border:1px solid var(--pink-100); border-radius:20px; padding:1.25rem 1.5rem; margin-bottom:1rem; }
+  .setup-card-title { font-size:14px; font-weight:800; color:var(--gray-800); margin-bottom:4px; }
+  .setup-card-desc { font-size:12px; color:var(--gray-400); font-weight:600; margin-bottom:1rem; line-height:1.5; }
+  .setup-steps { list-style:none; padding:0; margin-bottom:1rem; }
+  .setup-steps li { font-size:12px; color:var(--gray-600); font-weight:600; padding:5px 0 5px 26px; position:relative; line-height:1.4; }
+  .setup-steps li::before { content:attr(data-n); position:absolute; left:0; width:18px; height:18px; border-radius:50%; background:var(--pink-100); color:var(--pink-700); font-size:10px; font-weight:800; display:flex; align-items:center; justify-content:center; top:5px; }
+  .setup-steps code { background:var(--gray-100); color:var(--pink-700); padding:1px 5px; border-radius:4px; font-size:11px; }
+  .script-code { background:var(--gray-100); border-radius:12px; padding:12px 14px; font-size:11px; font-family:monospace; color:var(--gray-600); line-height:1.7; word-break:break-all; margin-bottom:0.75rem; user-select:all; cursor:text; white-space:pre-wrap; }
+  .copy-btn { width:100%; padding:9px; border:1.5px solid var(--gray-200); border-radius:10px; background:transparent; color:var(--gray-600); font-family:'Nunito',sans-serif; font-size:12px; font-weight:700; cursor:pointer; transition:background 0.15s; }
+  .copy-btn:hover { background:var(--gray-100); }
+  .url-wrap { position:relative; }
+  .url-wrap input { width:100%; padding:10px 38px 10px 13px; border-radius:12px; border:1.5px solid var(--gray-200); background:var(--gray-50); color:var(--gray-800); font-family:'Nunito',sans-serif; font-size:13px; font-weight:600; outline:none; transition:border-color 0.15s; }
+  .url-wrap input:focus { border-color:var(--pink-400); background:#fff; }
+  .url-clear { position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--gray-400); cursor:pointer; font-size:18px; line-height:1; display:none; }
+  .url-status { font-size:12px; font-weight:700; margin-top:6px; min-height:18px; }
+  .url-status.ok  { color:var(--green-600); }
+  .url-status.err { color:#e24b4a; }
+  .url-status.checking { color:var(--amber-400); }
+  .btn-connect { width:100%; margin-top:1rem; padding:13px; border:none; border-radius:14px; background:var(--pink-500); color:#fff; font-family:'Nunito',sans-serif; font-size:15px; font-weight:800; cursor:pointer; transition:background 0.15s; }
+  .btn-connect:hover { background:var(--pink-600); }
+  .btn-connect:disabled { background:var(--gray-200); color:var(--gray-400); cursor:not-allowed; }
+  .divider { text-align:center; font-size:11px; font-weight:700; color:var(--gray-400); letter-spacing:0.06em; text-transform:uppercase; margin:1.25rem 0 1rem; }
+  .btn-skip { width:100%; padding:11px; border:1.5px solid var(--gray-200); border-radius:14px; background:transparent; color:var(--gray-400); font-family:'Nunito',sans-serif; font-size:13px; font-weight:700; cursor:pointer; }
+  .btn-skip:hover { background:var(--gray-100); }
+  .connected-url { background:var(--green-50); border:1px solid #bbf7d0; border-radius:12px; padding:10px 14px; font-size:11px; font-weight:700; color:var(--green-600); word-break:break-all; margin-bottom:0.75rem; }
+  .btn-disconnect { width:100%; padding:11px; border:1.5px solid #fca5a5; border-radius:14px; background:transparent; color:#e24b4a; font-family:'Nunito',sans-serif; font-size:13px; font-weight:700; cursor:pointer; }
+  .btn-disconnect:hover { background:#fff1f1; }
 </style>
 </head>
 <body>
 
+<!-- ── Main app ── -->
 <div class="app">
-
   <div class="hero">
+    <div class="hero-top-row">
+      <button class="settings-btn" onclick="openSettings()" title="Connect Google Sheet">⚙️</button>
+    </div>
     <div class="hero-eyebrow">My Tip Savings</div>
     <svg class="pig-svg" width="120" height="96" viewBox="0 0 120 96" xmlns="http://www.w3.org/2000/svg">
       <ellipse cx="58" cy="58" rx="34" ry="28" fill="#F4C0D1"/>
@@ -420,7 +174,7 @@
 
   <div class="sync-bar">
     <div class="sync-dot" id="syncDot"></div>
-    <span id="syncLabel">Loading…</span>
+    <span id="syncLabel">Starting up…</span>
   </div>
 
   <div class="stats">
@@ -434,53 +188,30 @@
     <span class="section-title">My visits</span>
     <button class="add-btn" id="addBtn" onclick="openModal()" disabled>+ Add visit</button>
   </div>
-
   <div class="entries" id="entriesList">
     <div class="skeleton"></div>
     <div class="skeleton"></div>
     <div class="skeleton"></div>
   </div>
-
 </div>
 
-<!-- Add / Edit Modal -->
+<!-- ── Add/Edit modal ── -->
 <div class="overlay" id="overlay">
   <div class="sheet">
-    <div class="sheet-title">
-      <div class="pig-mini">🐷</div>
-      <span id="modalTitle">New visit</span>
-    </div>
+    <div class="sheet-title"><div class="pig-mini">🐷</div><span id="modalTitle">New visit</span></div>
     <input type="hidden" id="fEditId">
-    <div class="field">
-      <label>Date</label>
-      <input type="date" id="fDate">
-    </div>
-    <div class="field">
-      <label>Restaurant</label>
-      <input type="text" id="fRestaurant" placeholder="Where did you eat?">
-    </div>
-    <div class="field">
-      <label>Food ordered</label>
-      <input type="text" id="fFood" placeholder="What did you have?">
-    </div>
+    <div class="field"><label>Date</label><input type="date" id="fDate"></div>
+    <div class="field"><label>Restaurant</label><input type="text" id="fRestaurant" placeholder="Where did you eat?"></div>
+    <div class="field"><label>Food ordered</label><input type="text" id="fFood" placeholder="What did you have?"></div>
     <div class="field-2">
-      <div class="field">
-        <label>Bill amount ($)</label>
-        <input type="number" id="fAmount" placeholder="0.00" step="0.01" oninput="updateCalc()">
-      </div>
-      <div class="field">
-        <label>Tip paid ($)</label>
-        <input type="number" id="fTipped" placeholder="0.00" step="0.01" value="0" oninput="updateCalc()">
-      </div>
+      <div class="field"><label>Bill amount ($)</label><input type="number" id="fAmount" placeholder="0.00" step="0.01" oninput="updateCalc()"></div>
+      <div class="field"><label>Tip paid ($)</label><input type="number" id="fTipped" placeholder="0.00" step="0.01" value="0" oninput="updateCalc()"></div>
     </div>
     <div class="field">
       <label>Expected tip %</label>
       <select id="fPct" onchange="updateCalc()">
-        <option value="0.12">12%</option>
-        <option value="0.15">15%</option>
-        <option value="0.18" selected>18%</option>
-        <option value="0.20">20%</option>
-        <option value="0.25">25%</option>
+        <option value="0.12">12%</option><option value="0.15">15%</option>
+        <option value="0.18" selected>18%</option><option value="0.20">20%</option><option value="0.25">25%</option>
       </select>
     </div>
     <div class="calc-hint" id="calcHint"></div>
@@ -491,135 +222,196 @@
   </div>
 </div>
 
-<script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby-wgdcGe9-fwYBHSwBdLpfeMaxZ_dwcUGEp3-3gOUCOoeEV_BR9Z0RFXztQz08LCKLZQ/exec';
+<!-- ── Settings / Setup screen ── -->
+<div class="setup-screen" id="setupScreen">
+  <div class="setup-inner">
+    <button class="setup-back" id="backBtn" onclick="closeSettings()">← Back to app</button>
 
-let entries = [];
+    <div class="setup-pig">
+      <svg width="70" height="56" viewBox="0 0 120 96" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="58" cy="58" rx="34" ry="28" fill="#F4C0D1"/><ellipse cx="58" cy="54" rx="30" ry="26" fill="#ED93B1"/>
+        <ellipse cx="86" cy="58" rx="10" ry="8" fill="#F4C0D1"/><ellipse cx="86" cy="58" rx="7" ry="5.5" fill="#ED93B1"/>
+        <ellipse cx="62" cy="61" rx="10" ry="7" fill="#D4537E"/>
+        <circle cx="50" cy="51" r="3.5" fill="#993556"/><circle cx="66" cy="51" r="3.5" fill="#993556"/>
+        <ellipse cx="30" cy="54" rx="6" ry="14" fill="#F4C0D1"/>
+        <rect x="52" y="8" width="12" height="2" rx="1" fill="#EF9F27"/>
+      </svg>
+    </div>
+    <div class="setup-title">Google Sheets Sync</div>
+    <div class="setup-sub" id="setupSubText">Connect your own Google Sheet so your data syncs across all devices.</div>
+
+    <!-- Connected state -->
+    <div id="connectedState" style="display:none">
+      <div class="setup-card">
+        <div class="setup-card-title">✅ Connected to Google Sheets</div>
+        <div class="setup-card-desc">Your data syncs automatically across all your devices.</div>
+        <div class="connected-url" id="connectedUrlDisplay"></div>
+        <button class="btn-disconnect" onclick="disconnectSheet()">Disconnect sheet</button>
+      </div>
+    </div>
+
+    <!-- Setup state -->
+    <div id="setupState">
+      <div class="setup-card">
+        <div class="setup-card-title">📋 Step 1 — Set up your Apps Script</div>
+        <div class="setup-card-desc">Do this once in Google Sheets. Takes about 3 minutes.</div>
+        <ol class="setup-steps">
+          <li data-n="1">Open <strong>Google Sheets</strong>, create a blank spreadsheet</li>
+          <li data-n="2">Add headers in Row 1: <code>id</code> <code>date</code> <code>restaurant</code> <code>food</code> <code>amount</code> <code>tipped</code> <code>pct</code> <code>timestamp</code></li>
+          <li data-n="3">Click <strong>Extensions → Apps Script</strong>, delete everything, paste the code below</li>
+          <li data-n="4">Save, then <strong>Deploy → New deployment → Web app</strong></li>
+          <li data-n="5">Set <em>Execute as: Me</em> · <em>Who has access: Anyone</em> → Deploy</li>
+          <li data-n="6">Copy the <strong>Web app URL</strong> and paste it below ↓</li>
+        </ol>
+        <div class="script-code" id="scriptCodeBlock">const SHEET_NAME = 'Sheet1';
+function doGet(e) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+  const rows = sheet.getDataRange().getValues();
+  const headers = rows[0];
+  const data = rows.slice(1).map(row => {
+    const o = {}; headers.forEach((h,i) => o[h]=row[i]); return o;
+  });
+  return ContentService.createTextOutput(JSON.stringify({success:true,data})).setMimeType(ContentService.MimeType.JSON);
+}
+function doPost(e) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+  const payload = JSON.parse(e.postData.contents);
+  if (payload.action === 'save') {
+    sheet.clearContents();
+    sheet.appendRow(['id','date','restaurant','food','amount','tipped','pct','timestamp']);
+    payload.entries.forEach(entry => sheet.appendRow([entry.id,entry.date,entry.restaurant,entry.food,entry.amount,entry.tipped,entry.pct,new Date().toISOString()]));
+    return ContentService.createTextOutput(JSON.stringify({success:true})).setMimeType(ContentService.MimeType.JSON);
+  }
+}</div>
+        <button class="copy-btn" id="copyBtn" onclick="copyScript()">📋 Copy script code</button>
+      </div>
+
+      <div class="setup-card">
+        <div class="setup-card-title">🔗 Step 2 — Paste your Web App URL</div>
+        <div class="setup-card-desc">Paste the URL from your Apps Script deployment. It should start with <code>https://script.google.com/macros/s/</code></div>
+        <div class="url-wrap">
+          <input type="url" id="scriptUrlInput" placeholder="https://script.google.com/macros/s/…/exec" oninput="onUrlInput()">
+          <button class="url-clear" id="urlClear" onclick="clearUrl()">×</button>
+        </div>
+        <div class="url-status" id="urlStatus"></div>
+        <button class="btn-connect" id="connectBtn" onclick="connectSheet()" disabled>Connect to Google Sheets</button>
+      </div>
+
+      <div class="divider">or</div>
+      <button class="btn-skip" onclick="useLocalStorage()">Use this device only (no sync)</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const KEY_URL     = 'piggybank_script_url';
+const KEY_ENTRIES = 'piggybank_entries_local';
+const KEY_MODE    = 'piggybank_mode'; // 'sheets' | 'local'
+
+let entries  = [];
 let isSaving = false;
 
-// ── Sync UI helpers ──
+function c(n) { return '$' + parseFloat(n||0).toFixed(2); }
+function fmtDate(d) { return new Date(d+'T12:00:00').toLocaleDateString('en-CA',{month:'short',day:'numeric',year:'numeric'}); }
+function getScriptUrl() { return localStorage.getItem(KEY_URL) || ''; }
+function getMode()      { return localStorage.getItem(KEY_MODE) || ''; }
 function setSyncState(state, label) {
-  const dot = document.getElementById('syncDot');
-  const lbl = document.getElementById('syncLabel');
-  dot.className = 'sync-dot ' + state;
-  lbl.textContent = label;
+  document.getElementById('syncDot').className = 'sync-dot ' + state;
+  document.getElementById('syncLabel').textContent = label;
 }
 
-// ── Format helpers ──
-function c(n) { return '$' + parseFloat(n || 0).toFixed(2); }
-function fmtDate(d) {
-  const dt = new Date(d + 'T12:00:00');
-  return dt.toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric' });
+// ── Boot ──
+async function boot() {
+  const mode = getMode();
+  if (!mode) { openSetup(false); return; }
+  if (mode === 'sheets') await loadFromSheets();
+  else loadLocal();
 }
 
-// ── Load from Google Sheets ──
+// ── Local mode ──
+function loadLocal() {
+  try { const r = localStorage.getItem(KEY_ENTRIES); entries = r ? JSON.parse(r) : []; } catch(e) { entries = []; }
+  setSyncState('offline', 'Saved on this device only');
+  document.getElementById('addBtn').disabled = false;
+  render();
+}
+function saveLocal() {
+  localStorage.setItem(KEY_ENTRIES, JSON.stringify(entries));
+  setSyncState('offline', 'Saved on this device');
+}
+
+// ── Sheets mode ──
 async function loadFromSheets() {
+  const url = getScriptUrl();
+  if (!url) { openSetup(false); return; }
   setSyncState('syncing', 'Loading from Google Sheets…');
   try {
-    const res = await fetch(SCRIPT_URL);
+    const res = await fetch(url);
     const json = await res.json();
-    if (json.success) {
-      entries = json.data.map(row => ({
-        id:         Number(row.id),
-        date:       String(row.date || '').slice(0, 10),
-        restaurant: row.restaurant || '',
-        food:       row.food || '',
-        amount:     parseFloat(row.amount) || 0,
-        tipped:     parseFloat(row.tipped) || 0,
-        pct:        parseFloat(row.pct) || 0.18,
-      })).filter(e => e.id && e.date);
-      setSyncState('synced', 'Synced with Google Sheets');
-      document.getElementById('addBtn').disabled = false;
-      render();
-    } else {
-      throw new Error('Bad response');
-    }
+    if (!json.success && json.data === undefined) throw new Error();
+    entries = (json.data||[]).map(row => ({
+      id: Number(row.id), date: String(row.date||'').slice(0,10),
+      restaurant: row.restaurant||'', food: row.food||'',
+      amount: parseFloat(row.amount)||0, tipped: parseFloat(row.tipped)||0, pct: parseFloat(row.pct)||0.18,
+    })).filter(e => e.id && e.date);
+    setSyncState('synced', 'Synced with Google Sheets ✓');
+    document.getElementById('addBtn').disabled = false;
+    render();
   } catch(err) {
-    setSyncState('error', 'Could not connect — check Apps Script');
-    document.getElementById('entriesList').innerHTML =
-      '<div class="empty">⚠️ Could not load data. Check your Apps Script URL and permissions.</div>';
+    setSyncState('error', 'Could not connect — tap ⚙️ to check');
+    document.getElementById('entriesList').innerHTML = '<div class="empty">⚠️ Could not load data.<br>Tap ⚙️ to check your Script URL.</div>';
+    document.getElementById('addBtn').disabled = false;
   }
 }
-
-// ── Save all entries to Google Sheets ──
 async function saveToSheets() {
-  setSyncState('syncing', 'Saving…');
-  isSaving = true;
-  document.getElementById('saveBtn').disabled = true;
+  const url = getScriptUrl(); if (!url) return;
+  setSyncState('syncing', 'Saving to Google Sheets…');
+  isSaving = true; document.getElementById('saveBtn').disabled = true;
   try {
-    const res = await fetch(SCRIPT_URL, {
-      method: 'POST',
-      body: JSON.stringify({ action: 'save', entries })
-    });
+    const res = await fetch(url, { method:'POST', body: JSON.stringify({action:'save', entries}) });
     const json = await res.json();
-    if (json.success) {
-      setSyncState('synced', 'Saved to Google Sheets ✓');
-    } else {
-      throw new Error('Save failed');
-    }
+    if (!json.success) throw new Error();
+    setSyncState('synced', 'Saved to Google Sheets ✓');
   } catch(err) {
-    setSyncState('error', 'Save failed — try again');
+    setSyncState('error', 'Save failed — check connection');
   } finally {
-    isSaving = false;
-    document.getElementById('saveBtn').disabled = false;
+    isSaving = false; document.getElementById('saveBtn').disabled = false;
   }
 }
 
 // ── Render ──
 function render() {
-  const sorted = [...entries].sort((a, b) => b.date.localeCompare(a.date));
-  let totalSaved = 0, totalPaid = 0, totalSpend = 0, totalExpected = 0;
-  entries.forEach(e => {
-    const exp = e.amount * e.pct;
-    totalSaved    += Math.max(0, exp - e.tipped);
-    totalPaid     += e.tipped;
-    totalSpend    += e.amount;
-    totalExpected += exp;
-  });
-
-  document.getElementById('heroAmt').textContent = c(totalSaved);
-  document.getElementById('heroSub').innerHTML =
-    '<span class="coin-dot"></span>' + entries.length + ' restaurant visit' + (entries.length !== 1 ? 's' : '');
-  document.getElementById('statAvg').textContent      = entries.length ? c(totalSaved / entries.length) : '—';
-  document.getElementById('statPaid').textContent     = c(totalPaid);
-  document.getElementById('statSpend').textContent    = c(totalSpend);
-  document.getElementById('statExpected').textContent = c(totalExpected);
+  const sorted = [...entries].sort((a,b) => b.date.localeCompare(a.date));
+  let ts=0, tp=0, tsp=0, te=0;
+  entries.forEach(e => { const exp=e.amount*e.pct; ts+=Math.max(0,exp-e.tipped); tp+=e.tipped; tsp+=e.amount; te+=exp; });
+  document.getElementById('heroAmt').textContent = c(ts);
+  document.getElementById('heroSub').innerHTML = '<span class="coin-dot"></span>'+entries.length+' restaurant visit'+(entries.length!==1?'s':'');
+  document.getElementById('statAvg').textContent = entries.length ? c(ts/entries.length) : '—';
+  document.getElementById('statPaid').textContent = c(tp);
+  document.getElementById('statSpend').textContent = c(tsp);
+  document.getElementById('statExpected').textContent = c(te);
 
   const list = document.getElementById('entriesList');
-  if (!sorted.length) {
-    list.innerHTML = '<div class="empty">No visits yet — tap "+ Add visit" to start saving! 🐷</div>';
-    return;
-  }
+  if (!sorted.length) { list.innerHTML = '<div class="empty">No visits yet — tap "+ Add visit" to start saving! 🐷</div>'; return; }
   list.innerHTML = sorted.map(e => {
-    const exp   = e.amount * e.pct;
-    const saved = Math.max(0, exp - e.tipped);
-    const name  = e.restaurant || 'Restaurant visit';
+    const exp = e.amount*e.pct, saved = Math.max(0,exp-e.tipped), name = e.restaurant||'Restaurant visit';
     return `<div class="entry-card">
       <div class="entry-top">
         <div>
           <div class="entry-name">${name}</div>
           <div class="entry-date">${fmtDate(e.date)}</div>
-          ${e.food ? '<span class="entry-food-badge">' + e.food + '</span>' : ''}
+          ${e.food?'<span class="entry-food-badge">'+e.food+'</span>':''}
         </div>
         <div class="entry-actions">
           <span class="saved-badge">+${c(saved)}</span>
-          <button class="edit-btn" title="Edit" onclick="openEdit(${e.id})">✏️</button>
-          <button class="del-btn"  title="Delete" onclick="del(${e.id})">×</button>
+          <button class="edit-btn" onclick="openEdit(${e.id})">✏️</button>
+          <button class="del-btn" onclick="del(${e.id})">×</button>
         </div>
       </div>
       <div class="entry-grid">
-        <div>
-          <div class="entry-field-lbl">Bill</div>
-          <div class="entry-field-val">${c(e.amount)}</div>
-        </div>
-        <div>
-          <div class="entry-field-lbl">Tip paid</div>
-          <div class="entry-field-val">${c(e.tipped)}</div>
-        </div>
-        <div>
-          <div class="entry-field-lbl">Expected (${Math.round(e.pct * 100)}%)</div>
-          <div class="entry-field-val">${c(exp)}</div>
-        </div>
+        <div><div class="entry-field-lbl">Bill</div><div class="entry-field-val">${c(e.amount)}</div></div>
+        <div><div class="entry-field-lbl">Tip paid</div><div class="entry-field-val">${c(e.tipped)}</div></div>
+        <div><div class="entry-field-lbl">Expected (${Math.round(e.pct*100)}%)</div><div class="entry-field-val">${c(exp)}</div></div>
       </div>
     </div>`;
   }).join('');
@@ -627,81 +419,141 @@ function render() {
 
 // ── Modal ──
 function openModal(editEntry) {
-  document.getElementById('fEditId').value      = editEntry ? editEntry.id : '';
+  document.getElementById('fEditId').value = editEntry ? editEntry.id : '';
   document.getElementById('modalTitle').textContent = editEntry ? 'Edit visit' : 'New visit';
-  document.getElementById('fDate').value        = editEntry ? editEntry.date : new Date().toISOString().slice(0, 10);
-  document.getElementById('fRestaurant').value  = editEntry ? editEntry.restaurant : '';
-  document.getElementById('fFood').value        = editEntry ? editEntry.food : '';
-  document.getElementById('fAmount').value      = editEntry ? editEntry.amount : '';
-  document.getElementById('fTipped').value      = editEntry ? editEntry.tipped : '0';
-  document.getElementById('fPct').value         = editEntry ? editEntry.pct : '0.18';
+  document.getElementById('fDate').value = editEntry ? editEntry.date : new Date().toISOString().slice(0,10);
+  document.getElementById('fRestaurant').value = editEntry ? editEntry.restaurant : '';
+  document.getElementById('fFood').value = editEntry ? editEntry.food : '';
+  document.getElementById('fAmount').value = editEntry ? editEntry.amount : '';
+  document.getElementById('fTipped').value = editEntry ? editEntry.tipped : '0';
+  document.getElementById('fPct').value = editEntry ? editEntry.pct : '0.18';
   document.getElementById('calcHint').style.display = 'none';
   if (editEntry) updateCalc();
   document.getElementById('overlay').classList.add('open');
 }
-
-function openEdit(id) {
-  const entry = entries.find(e => e.id === id);
-  if (entry) openModal(entry);
-}
-
+function openEdit(id) { const e = entries.find(e=>e.id===id); if(e) openModal(e); }
 function closeModal() { document.getElementById('overlay').classList.remove('open'); }
 
 function updateCalc() {
-  const amt    = parseFloat(document.getElementById('fAmount').value) || 0;
-  const tipped = parseFloat(document.getElementById('fTipped').value) || 0;
-  const pct    = parseFloat(document.getElementById('fPct').value);
-  const hint   = document.getElementById('calcHint');
-  if (amt > 0) {
-    const exp   = amt * pct;
-    const saved = Math.max(0, exp - tipped);
-    hint.style.display = 'block';
-    hint.textContent   = 'Expected tip: ' + c(exp) + '  ·  You save: ' + c(saved);
-  } else {
-    hint.style.display = 'none';
-  }
+  const amt = parseFloat(document.getElementById('fAmount').value)||0;
+  const tip = parseFloat(document.getElementById('fTipped').value)||0;
+  const pct = parseFloat(document.getElementById('fPct').value);
+  const hint = document.getElementById('calcHint');
+  if (amt>0) { hint.style.display='block'; hint.textContent='Expected tip: '+c(amt*pct)+'  ·  You save: '+c(Math.max(0,amt*pct-tip)); }
+  else hint.style.display='none';
 }
 
 async function saveEntry() {
-  const date   = document.getElementById('fDate').value;
+  const date = document.getElementById('fDate').value;
   const amount = parseFloat(document.getElementById('fAmount').value);
-  if (!date || isNaN(amount) || amount <= 0) { alert('Please enter a date and bill amount.'); return; }
-
+  if (!date||isNaN(amount)||amount<=0) { alert('Please enter a date and bill amount.'); return; }
   const editId = document.getElementById('fEditId').value;
   const updated = {
-    id:         editId ? Number(editId) : (entries.length ? Math.max(...entries.map(e => e.id)) + 1 : 1),
-    date,
-    restaurant: document.getElementById('fRestaurant').value.trim(),
-    food:       document.getElementById('fFood').value.trim(),
-    amount,
-    tipped:     parseFloat(document.getElementById('fTipped').value) || 0,
-    pct:        parseFloat(document.getElementById('fPct').value),
+    id: editId ? Number(editId) : (entries.length ? Math.max(...entries.map(e=>e.id))+1 : 1),
+    date, restaurant: document.getElementById('fRestaurant').value.trim(),
+    food: document.getElementById('fFood').value.trim(), amount,
+    tipped: parseFloat(document.getElementById('fTipped').value)||0,
+    pct: parseFloat(document.getElementById('fPct').value),
   };
-
-  if (editId) {
-    entries = entries.map(e => e.id === Number(editId) ? updated : e);
-  } else {
-    entries.push(updated);
-  }
-
-  render();
-  closeModal();
-  await saveToSheets();
+  entries = editId ? entries.map(e=>e.id===Number(editId)?updated:e) : [...entries, updated];
+  render(); closeModal();
+  if (getMode()==='sheets') await saveToSheets(); else saveLocal();
 }
 
 async function del(id) {
   if (!confirm('Delete this entry?')) return;
-  entries = entries.filter(e => e.id !== id);
-  render();
-  await saveToSheets();
+  entries = entries.filter(e=>e.id!==id); render();
+  if (getMode()==='sheets') await saveToSheets(); else saveLocal();
 }
 
-document.getElementById('overlay').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
+document.getElementById('overlay').addEventListener('click', function(e) { if(e.target===this) closeModal(); });
 
-// ── Boot ──
-loadFromSheets();
+// ── Settings screen ──
+function openSetup(canGoBack = true) {
+  const url = getScriptUrl();
+  document.getElementById('backBtn').style.display = (canGoBack && !!getMode()) ? 'flex' : 'none';
+  document.getElementById('setupSubText').textContent = url
+    ? 'Manage your Google Sheets connection.'
+    : 'Connect your own Google Sheet so your data syncs across all devices — phone, laptop, anywhere.';
+  if (url && getMode() === 'sheets') {
+    document.getElementById('connectedState').style.display = 'block';
+    document.getElementById('setupState').style.display = 'none';
+    document.getElementById('connectedUrlDisplay').textContent = url;
+  } else {
+    document.getElementById('connectedState').style.display = 'none';
+    document.getElementById('setupState').style.display = 'block';
+    document.getElementById('scriptUrlInput').value = '';
+    document.getElementById('urlStatus').textContent = '';
+    document.getElementById('connectBtn').disabled = true;
+    document.getElementById('urlClear').style.display = 'none';
+  }
+  document.getElementById('setupScreen').classList.add('open');
+}
+function openSettings() { openSetup(true); }
+function closeSettings() { document.getElementById('setupScreen').classList.remove('open'); }
+
+function onUrlInput() {
+  const val = document.getElementById('scriptUrlInput').value.trim();
+  document.getElementById('urlClear').style.display = val ? 'block' : 'none';
+  const valid = val.startsWith('https://script.google.com/macros/s/') && val.endsWith('/exec');
+  document.getElementById('connectBtn').disabled = !valid;
+  const status = document.getElementById('urlStatus');
+  if (!val) { status.className='url-status'; status.textContent=''; }
+  else if (valid) { status.className='url-status ok'; status.textContent='✓ Looks good!'; }
+  else { status.className='url-status err'; status.textContent='Should start with https://script.google.com/macros/s/ and end with /exec'; }
+}
+
+function clearUrl() {
+  document.getElementById('scriptUrlInput').value='';
+  document.getElementById('urlClear').style.display='none';
+  document.getElementById('connectBtn').disabled=true;
+  document.getElementById('urlStatus').textContent='';
+}
+
+async function connectSheet() {
+  const url = document.getElementById('scriptUrlInput').value.trim();
+  const btn = document.getElementById('connectBtn');
+  const status = document.getElementById('urlStatus');
+  btn.disabled=true; btn.textContent='Testing connection…';
+  status.className='url-status checking'; status.textContent='Connecting to your sheet…';
+  try {
+    const res = await fetch(url);
+    const json = await res.json();
+    if (!json.success && json.data===undefined) throw new Error();
+    localStorage.setItem(KEY_URL, url);
+    localStorage.setItem(KEY_MODE, 'sheets');
+    closeSettings();
+    await loadFromSheets();
+  } catch(err) {
+    status.className='url-status err';
+    status.textContent='✗ Could not connect. Check the URL and make sure "Who has access" is set to Anyone.';
+    btn.disabled=false; btn.textContent='Connect to Google Sheets';
+  }
+}
+
+function useLocalStorage() {
+  localStorage.setItem(KEY_MODE, 'local');
+  localStorage.removeItem(KEY_URL);
+  closeSettings(); loadLocal();
+}
+
+function disconnectSheet() {
+  if (!confirm('Disconnect Google Sheets? Your data in the sheet stays intact.')) return;
+  localStorage.removeItem(KEY_URL);
+  localStorage.setItem(KEY_MODE, 'local');
+  entries = []; closeSettings(); loadLocal();
+}
+
+function copyScript() {
+  const code = document.getElementById('scriptCodeBlock').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => { btn.textContent = '📋 Copy script code'; }, 2000);
+  });
+}
+
+boot();
 </script>
 </body>
 </html>
